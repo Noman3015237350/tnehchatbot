@@ -46,7 +46,8 @@ async function getAIResponse(question) {
     const response = await axios.get(`https://dark-ai.lmnx9.workers.dev?sukhi=${encodeURIComponent(question)}`, {
       timeout: 30000,
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        'Accept': 'application/json'
       }
     });
     return {
@@ -54,6 +55,7 @@ async function getAIResponse(question) {
       response: response.data
     };
   } catch (error) {
+    console.error('AI API Error:', error.message);
     return {
       success: false,
       error: error.message
@@ -61,11 +63,13 @@ async function getAIResponse(question) {
   }
 }
 
-// Create API Key (Unlimited days)
+// ============= CORRECTED ENDPOINTS =============
+
+// 1. Create API Key
 app.get('/api/createkey', (req, res) => {
   const apiKey = generateApiKey();
   const expiryDate = new Date();
-  expiryDate.setFullYear(expiryDate.getFullYear() + 1); // 1 year expiry
+  expiryDate.setFullYear(expiryDate.getFullYear() + 1);
   
   validKeys.set(apiKey, expiryDate);
   
@@ -79,14 +83,16 @@ app.get('/api/createkey', (req, res) => {
   });
 });
 
-// Chat with AI
-app.get('/api/key=&asking=', async (req, res) => {
+// 2. Chat with AI (Fixed endpoint)
+app.get('/api/key', async (req, res) => {
   const { key, asking } = req.query;
+  
+  console.log('Request received:', { key: key ? key.substring(0, 20) + '...' : null, asking });
   
   if (!key || !asking) {
     return res.status(400).json({
       success: false,
-      error: 'Missing required parameters: key and asking',
+      error: 'Missing required parameters. Use: /api/key?key=YOUR_KEY&asking=YOUR_QUESTION',
       developer: DEVELOPER_INFO
     });
   }
@@ -111,14 +117,14 @@ app.get('/api/key=&asking=', async (req, res) => {
   });
 });
 
-// Check API Key
-app.get('/api/check&key=', (req, res) => {
+// 3. Check API Key (Fixed endpoint)
+app.get('/api/check', (req, res) => {
   const { key } = req.query;
   
   if (!key) {
     return res.status(400).json({
       success: false,
-      error: 'Missing API key parameter',
+      error: 'Missing API key parameter. Use: /api/check?key=YOUR_KEY',
       developer: DEVELOPER_INFO
     });
   }
@@ -136,19 +142,19 @@ app.get('/api/check&key=', (req, res) => {
   });
 });
 
-// Health check
+// 4. Health check
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'active',
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
     developer: DEVELOPER_INFO,
-    endpoints: [
-      '/api/createkey',
-      '/api/key=&asking=',
-      '/api/check&key=',
-      '/api/health'
-    ]
+    endpoints: {
+      create_key: '/api/createkey',
+      chat: '/api/key?key=YOUR_KEY&asking=YOUR_QUESTION',
+      check_key: '/api/check?key=YOUR_KEY',
+      health: '/api/health'
+    }
   });
 });
 
@@ -162,7 +168,13 @@ app.use((req, res) => {
   res.status(404).json({
     success: false,
     error: 'Endpoint not found',
-    developer: DEVELOPER_INFO
+    developer: DEVELOPER_INFO,
+    available_endpoints: {
+      create_key: 'GET /api/createkey',
+      chat: 'GET /api/key?key=YOUR_KEY&asking=YOUR_QUESTION',
+      check_key: 'GET /api/check?key=YOUR_KEY',
+      health: 'GET /api/health'
+    }
   });
 });
 
@@ -181,4 +193,8 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`✅ TNEH Ethical Hacker AI Chatbot running on port ${PORT}`);
   console.log(`🌐 Website URL: https://tnehchatbot.onrender.com`);
   console.log(`📡 API URL: https://tnehchatbot.onrender.com/api/health`);
+  console.log(`\n📌 Correct API Usage:`);
+  console.log(`   Generate Key: GET /api/createkey`);
+  console.log(`   Chat: GET /api/key?key=YOUR_KEY&asking=YOUR_QUESTION`);
+  console.log(`   Check Key: GET /api/check?key=YOUR_KEY`);
 });
