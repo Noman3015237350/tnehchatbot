@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TNEH Ethical Hacker AI Chatbot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>TNEH Ethical Hacker AI Chatbot | 3D Cyber Security Assistant</title>
     <style>
         * {
             margin: 0;
@@ -12,97 +12,286 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            font-family: 'Segoe UI', 'Poppins', 'Orbitron', monospace;
+            background: radial-gradient(circle at 20% 50%, #0a0a0a, #000000);
             min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, #00ff88, #00bcd4);
+        /* 3D Animated Background */
+        .cyber-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: linear-gradient(125deg, #0a0a0a 0%, #1a0033 50%, #0a0a0a 100%);
+        }
+
+        /* Animated Grid */
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, #00ff88, transparent);
+            border-radius: 50%;
+            opacity: 0;
+            animation: floatParticle 8s ease-in-out infinite;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) scale(0);
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) scale(1);
+            }
+        }
+
+        /* Glow Effect */
+        .glow {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0,255,136,0.15), transparent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulseGlow 4s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.3); }
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
             padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 3D Header */
+        .header {
             text-align: center;
-            box-shadow: 0 5px 20px rgba(0,255,136,0.3);
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            perspective: 1000px;
         }
 
         .header h1 {
-            font-size: 2em;
-            color: #0a0a0a;
+            font-size: 3.5em;
+            background: linear-gradient(135deg, #00ff88, #00bcd4, #ff006e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+            text-shadow: 0 0 30px rgba(0,255,136,0.3);
+            letter-spacing: 2px;
+            transform-style: preserve-3d;
+            animation: titleFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes titleFloat {
+            0%, 100% { transform: translateZ(0); }
+            50% { transform: translateZ(30px); }
         }
 
         .header p {
-            color: #0a0a0a;
-            opacity: 0.9;
+            color: rgba(0,255,136,0.8);
+            font-size: 1.2em;
+            margin-top: 10px;
+            animation: fadeInUp 1s ease-out;
         }
 
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Tabs */
+        /* 3D Tabs */
         .tabs {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 15px;
+            margin-bottom: 30px;
             flex-wrap: wrap;
+            justify-content: center;
+            perspective: 500px;
         }
 
         .tab {
-            padding: 12px 25px;
-            background: rgba(255,255,255,0.1);
-            border: none;
-            border-radius: 10px;
+            padding: 12px 30px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0,255,136,0.3);
+            border-radius: 50px;
             cursor: pointer;
             font-size: 1em;
             font-weight: bold;
-            color: white;
-            transition: all 0.3s;
+            color: #00ff88;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(0,255,136,0.3), transparent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .tab:hover::before {
+            width: 200px;
+            height: 200px;
+        }
+
+        .tab:hover {
+            transform: translateY(-5px) rotateX(5deg);
+            box-shadow: 0 10px 30px rgba(0,255,136,0.3);
+            border-color: #00ff88;
         }
 
         .tab.active {
             background: linear-gradient(135deg, #00ff88, #00bcd4);
-            color: #0a0a0a;
+            color: #000;
+            box-shadow: 0 0 30px rgba(0,255,136,0.5);
+            animation: tabPulse 1s ease-in-out;
         }
 
-        .tab:hover {
-            transform: translateY(-2px);
+        @keyframes tabPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
-        /* Cards */
+        /* 3D Cards */
         .card {
-            background: rgba(255,255,255,0.95);
-            border-radius: 20px;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
             padding: 30px;
+            border: 1px solid rgba(0,255,136,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
             display: none;
-            animation: fadeIn 0.5s;
+            animation: cardFlipIn 0.6s ease-out;
+            transform-style: preserve-3d;
         }
 
         .card.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes cardFlipIn {
+            from {
+                opacity: 0;
+                transform: rotateY(90deg) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: rotateY(0) scale(1);
+            }
         }
 
-        /* Chat Area */
-        .chat-container {
-            height: 400px;
-            overflow-y: auto;
-            border: 1px solid #ddd;
-            border-radius: 15px;
-            padding: 15px;
+        .card h2 {
+            color: #00ff88;
             margin-bottom: 20px;
-            background: #f9f9f9;
+            font-size: 1.8em;
+            text-shadow: 0 0 10px rgba(0,255,136,0.5);
+            border-left: 4px solid #00ff88;
+            padding-left: 15px;
         }
 
+        /* 3D Chat Container */
+        .chat-container {
+            height: 450px;
+            overflow-y: auto;
+            border: 1px solid rgba(0,255,136,0.2);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: rgba(0,0,0,0.4);
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+        }
+
+        .chat-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-container::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+
+        .chat-container::-webkit-scrollbar-thumb {
+            background: #00ff88;
+            border-radius: 10px;
+        }
+
+        /* Message Styles with 3D effect */
         .message {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             display: flex;
+            animation: messageSlideIn 0.4s ease-out;
+        }
+
+        @keyframes messageSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         .user-message {
@@ -114,73 +303,110 @@
         }
 
         .message-content {
-            max-width: 70%;
-            padding: 10px 15px;
-            border-radius: 15px;
+            max-width: 75%;
+            padding: 12px 20px;
+            border-radius: 20px;
             word-wrap: break-word;
+            position: relative;
+            transition: all 0.3s;
         }
 
         .user-message .message-content {
             background: linear-gradient(135deg, #00ff88, #00bcd4);
-            color: #0a0a0a;
+            color: #000;
+            border-radius: 20px 20px 5px 20px;
+            box-shadow: 0 5px 15px rgba(0,255,136,0.3);
+            animation: messageGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes messageGlow {
+            0%, 100% { box-shadow: 0 5px 15px rgba(0,255,136,0.3); }
+            50% { box-shadow: 0 5px 25px rgba(0,255,136,0.6); }
         }
 
         .bot-message .message-content {
-            background: #e0e0e0;
-            color: #333;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0,255,136,0.3);
+            color: #00ff88;
+            border-radius: 20px 20px 20px 5px;
         }
 
-        .chat-input {
+        /* Input Fields with 3D effect */
+        .chat-input, .input-group {
             display: flex;
-            gap: 10px;
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
-        .chat-input input {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 1em;
-        }
-
-        .chat-input button {
-            padding: 12px 25px;
-            background: linear-gradient(135deg, #00ff88, #00bcd4);
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        /* Inputs */
         input, textarea {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 2px solid #ddd;
-            border-radius: 10px;
+            flex: 1;
+            padding: 14px 20px;
+            background: rgba(0,0,0,0.6);
+            border: 1px solid rgba(0,255,136,0.3);
+            border-radius: 50px;
+            color: #00ff88;
             font-size: 1em;
+            transition: all 0.3s;
+            outline: none;
         }
 
+        input:focus, textarea:focus {
+            border-color: #00ff88;
+            box-shadow: 0 0 20px rgba(0,255,136,0.3);
+            transform: scale(1.02);
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: rgba(0,255,136,0.5);
+        }
+
+        /* 3D Buttons */
         button {
-            padding: 12px 25px;
+            padding: 14px 30px;
             background: linear-gradient(135deg, #00ff88, #00bcd4);
             border: none;
-            border-radius: 10px;
+            border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
-            transition: transform 0.2s;
+            font-size: 1em;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+            color: #000;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        button:hover::before {
+            left: 100%;
         }
 
         button:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,255,136,0.4);
         }
 
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Result Boxes */
         .result {
             margin-top: 20px;
-            padding: 15px;
-            border-radius: 10px;
+            padding: 20px;
+            border-radius: 15px;
             display: none;
+            animation: fadeInUp 0.5s;
         }
 
         .result.show {
@@ -188,69 +414,132 @@
         }
 
         .success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
+            background: rgba(0,255,136,0.1);
+            border: 1px solid #00ff88;
+            color: #00ff88;
         }
 
         .error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+            background: rgba(255,0,0,0.1);
+            border: 1px solid #ff006e;
+            color: #ff006e;
         }
 
         .info {
-            background: #d1ecf1;
-            color: #0c5460;
-            border: 1px solid #bee5eb;
+            background: rgba(0,188,212,0.1);
+            border: 1px solid #00bcd4;
+            color: #00bcd4;
         }
 
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Key Badge */
         .key-badge {
-            background: #2d3748;
-            color: #fff;
-            padding: 10px;
-            border-radius: 8px;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid #00ff88;
+            border-radius: 15px;
+            padding: 15px;
             font-family: monospace;
             word-break: break-all;
-            margin: 10px 0;
+            margin: 15px 0;
+            color: #00ff88;
+            position: relative;
+            overflow: hidden;
+            animation: borderPulse 2s ease-in-out infinite;
         }
 
+        @keyframes borderPulse {
+            0%, 100% { border-color: rgba(0,255,136,0.5); box-shadow: 0 0 5px rgba(0,255,136,0.2); }
+            50% { border-color: rgba(0,255,136,1); box-shadow: 0 0 20px rgba(0,255,136,0.5); }
+        }
+
+        /* Developer Info */
         .dev-info {
-            margin-top: 20px;
-            padding: 15px;
-            background: rgba(0,255,136,0.1);
-            border-radius: 10px;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
             text-align: center;
-            color: white;
+            border: 1px solid rgba(0,255,136,0.2);
+            animation: fadeInUp 1s;
+        }
+
+        .dev-info p {
+            color: rgba(0,255,136,0.7);
+            margin: 5px 0;
         }
 
         .dev-info a {
             color: #00ff88;
             text-decoration: none;
+            transition: all 0.3s;
         }
 
+        .dev-info a:hover {
+            text-shadow: 0 0 10px #00ff88;
+        }
+
+        /* Typing Indicator */
         .typing {
-            color: #666;
+            color: #00ff88;
             font-style: italic;
+            animation: blink 1s step-end infinite;
         }
 
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            .message-content {
-                max-width: 85%;
-            }
+            .header h1 { font-size: 2em; }
+            .tabs { gap: 10px; }
+            .tab { padding: 8px 20px; font-size: 0.9em; }
+            .chat-input { flex-direction: column; }
+            .message-content { max-width: 90%; }
+            .card { padding: 20px; }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(0,255,136,0.3);
+            border-radius: 50%;
+            border-top-color: #00ff88;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>🤖 TNEH Ethical Hacker AI Chatbot</h1>
-        <p>Your Cybersecurity Learning Assistant | Ethical Hacking Education</p>
-    </div>
+    <div class="cyber-bg"></div>
+    <div class="grid-overlay"></div>
+    <div class="glow"></div>
+    <div class="particles" id="particles"></div>
 
     <div class="container">
+        <div class="header">
+            <h1>🤖 TNEH Ethical Hacker AI</h1>
+            <p>⚡ Advanced Cybersecurity Intelligence | 3D Neural Network ⚡</p>
+        </div>
+
         <div class="tabs">
             <button class="tab active" onclick="switchTab('chat')">💬 AI CHAT</button>
             <button class="tab" onclick="switchTab('keygen')">🔑 GET API KEY</button>
@@ -260,40 +549,41 @@
 
         <!-- Chat Tab -->
         <div id="chatTab" class="card active">
+            <h2>💬 Neural Chat Interface</h2>
             <div class="chat-container" id="chatContainer">
                 <div class="message bot-message">
                     <div class="message-content">
-                        🤖 Hello! I'm TNEH Ethical Hacker AI.<br>
-                        I can help you with:<br>
-                        • Cybersecurity concepts<br>
-                        • Ethical hacking techniques<br>
-                        • Penetration testing<br>
-                        • Security best practices<br>
-                        • Bug bounty tips<br><br>
-                        ⚠️ For educational purposes only!
+                        🔐 <strong>TNEH Ethical Hacker AI Online</strong><br><br>
+                        ⚡ I can assist you with:<br>
+                        • Cybersecurity assessments<br>
+                        • Ethical hacking methodologies<br>
+                        • Penetration testing techniques<br>
+                        • Vulnerability analysis<br>
+                        • Security best practices<br><br>
+                        <span style="color: #00ff88;">⚠️ Educational purposes only. Use ethically!</span>
                     </div>
                 </div>
             </div>
             <div class="chat-input">
-                <input type="text" id="apiKeyChat" placeholder="Enter your API Key">
-                <input type="text" id="questionInput" placeholder="Ask me anything about ethical hacking...">
-                <button onclick="sendMessage()">Send 💬</button>
+                <input type="text" id="apiKeyChat" placeholder="🔑 Enter your API Key">
+                <input type="text" id="questionInput" placeholder="💬 Ask me anything about cybersecurity...">
+                <button onclick="sendMessage()">🚀 SEND MESSAGE</button>
             </div>
         </div>
 
         <!-- Generate Key Tab -->
         <div id="keygenTab" class="card">
             <h2>🔑 Generate API Key</h2>
-            <p>Get your free API key for TNEH Ethical Hacker AI Chatbot</p>
-            <button onclick="generateKey()">Generate API Key</button>
+            <p>⚡ Get your free API key for TNEH Ethical Hacker AI</p>
+            <button onclick="generateKey()">✨ GENERATE API KEY</button>
             <div id="keyResult" class="result"></div>
         </div>
 
         <!-- Check Key Tab -->
         <div id="checkTab" class="card">
             <h2>✅ Check API Key Status</h2>
-            <input type="text" id="checkKeyInput" placeholder="Enter your API Key">
-            <button onclick="checkKey()">Check Key Status</button>
+            <input type="text" id="checkKeyInput" placeholder="🔑 Enter your API Key">
+            <button onclick="checkKey()">🔍 VERIFY KEY</button>
             <div id="checkResult" class="result"></div>
         </div>
 
@@ -301,50 +591,63 @@
         <div id="docsTab" class="card">
             <h2>📖 API Documentation</h2>
             
-            <h3>Base URL:</h3>
+            <h3>🌐 Base URL:</h3>
             <div class="key-badge">https://tnehchatbot.onrender.com</div>
 
-            <h3>1. Generate API Key</h3>
+            <h3>1️⃣ Generate API Key</h3>
             <div class="key-badge">GET /api/createkey</div>
 
-            <h3>2. Chat with AI</h3>
-            <div class="key-badge">GET /api/key=&asking=</div>
-            <p>Parameters: key=YOUR_KEY&asking=YOUR_QUESTION</p>
+            <h3>2️⃣ Chat with AI</h3>
+            <div class="key-badge">GET /api/key?key=YOUR_KEY&asking=YOUR_QUESTION</div>
 
-            <h3>3. Check API Key</h3>
-            <div class="key-badge">GET /api/check&key=</div>
-            <p>Parameters: key=YOUR_KEY</p>
+            <h3>3️⃣ Check API Key</h3>
+            <div class="key-badge">GET /api/check?key=YOUR_KEY</div>
 
-            <h3>4. Health Check</h3>
+            <h3>4️⃣ Health Check</h3>
             <div class="key-badge">GET /api/health</div>
 
-            <h3>cURL Examples:</h3>
+            <h3>📡 cURL Examples:</h3>
             <div class="key-badge">
                 # Generate Key<br>
                 curl https://tnehchatbot.onrender.com/api/createkey<br><br>
                 # Ask Question<br>
-                curl "https://tnehchatbot.onrender.com/api/key=&asking=What is SQL injection?&key=TNEH-HACK-xxxxx"
+                curl "https://tnehchatbot.onrender.com/api/key?key=YOUR_KEY&asking=What is SQL injection?"
             </div>
         </div>
 
-        <!-- Developer Info -->
         <div class="dev-info">
-            <p><strong>👨‍💻 Developer:</strong> TNEH GROUP BD</p>
-            <p><strong>📱 Telegram:</strong> <a href="https://t.me/tneh_owner" target="_blank">@tneh_owner</a></p>
-            <p><strong>🌐 Website:</strong> <a href="https://tnehchatbot.onrender.com" target="_blank">tnehchatbot.onrender.com</a></p>
-            <p><strong>⚠️ Warning:</strong> For educational purposes only. Use ethically and legally.</p>
+            <p>👨‍💻 <strong>TNEH GROUP BD</strong> | 🔐 Ethical Hacking AI</p>
+            <p>📱 Telegram: <a href="https://t.me/tneh_owner" target="_blank">@tneh_owner</a></p>
+            <p>⚠️ Educational Purpose Only | Use Responsibly</p>
+            <p>⚡ 3D Neural Network Interface | Cyber Security Intelligence ⚡</p>
         </div>
     </div>
 
     <script>
         const API_BASE = window.location.origin;
 
+        // Create particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                const size = Math.random() * 5 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 10 + 's';
+                particle.style.animationDuration = Math.random() * 10 + 5 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
         function switchTab(tab) {
-            // Update tabs
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
 
-            // Update content
             document.getElementById('chatTab').classList.remove('active');
             document.getElementById('keygenTab').classList.remove('active');
             document.getElementById('checkTab').classList.remove('active');
@@ -354,7 +657,7 @@
 
         async function generateKey() {
             const resultDiv = document.getElementById('keyResult');
-            resultDiv.innerHTML = '<div class="info">⏳ Generating API key...</div>';
+            resultDiv.innerHTML = '<div class="info">⏳ Generating secure API key...</div>';
             resultDiv.classList.add('show');
             
             try {
@@ -364,11 +667,11 @@
                 if (data.success) {
                     resultDiv.innerHTML = `
                         <div class="success">
-                            <strong>✅ API Key Generated!</strong>
-                            <div class="key-badge">${data.api_key}</div>
+                            <strong>✅ API Key Generated Successfully!</strong>
+                            <div class="key-badge">🔐 ${data.api_key}</div>
                             <strong>📅 Valid for:</strong> ${data.valid_days} days<br>
                             <strong>⏰ Expires:</strong> ${new Date(data.expiry_date).toLocaleString()}
-                            <button onclick="copyKey('${data.api_key}')" style="margin-top:10px">📋 Copy Key</button>
+                            <button onclick="copyKey('${data.api_key}')" style="margin-top:15px">📋 Copy Key</button>
                         </div>
                     `;
                 } else {
@@ -389,11 +692,11 @@
                 return;
             }
             
-            resultDiv.innerHTML = '<div class="info">⏳ Checking key status...</div>';
+            resultDiv.innerHTML = '<div class="info">🔍 Verifying key status...</div>';
             resultDiv.classList.add('show');
             
             try {
-                const response = await fetch(`${API_BASE}/api/check&key=${key}`);
+                const response = await fetch(`${API_BASE}/api/check?key=${key}`);
                 const data = await response.json();
                 
                 if (data.valid) {
@@ -418,44 +721,41 @@
             const chatContainer = document.getElementById('chatContainer');
             
             if (!key) {
-                alert('Please enter your API Key');
+                alert('🔑 Please enter your API Key');
                 return;
             }
             
             if (!question) {
-                alert('Please enter a question');
+                alert('💬 Please enter a question');
                 return;
             }
             
-            // Add user message
+            // Add user message with animation
             const userMessageDiv = document.createElement('div');
             userMessageDiv.className = 'message user-message';
             userMessageDiv.innerHTML = `<div class="message-content">${escapeHtml(question)}</div>`;
             chatContainer.appendChild(userMessageDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
             
-            // Clear input
             document.getElementById('questionInput').value = '';
             
             // Add typing indicator
             const typingDiv = document.createElement('div');
             typingDiv.className = 'message bot-message';
             typingDiv.id = 'typingIndicator';
-            typingDiv.innerHTML = `<div class="message-content typing">🤖 Typing...</div>`;
+            typingDiv.innerHTML = `<div class="message-content"><span class="loading"></span> Analyzing threat vector...</div>`;
             chatContainer.appendChild(typingDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
             
             try {
-                const response = await fetch(`${API_BASE}/api/key=&asking=${encodeURIComponent(question)}&key=${key}`);
+                const response = await fetch(`${API_BASE}/api/key?key=${key}&asking=${encodeURIComponent(question)}`);
                 const data = await response.json();
                 
-                // Remove typing indicator
                 document.getElementById('typingIndicator').remove();
                 
-                // Add bot response
                 const botMessageDiv = document.createElement('div');
                 botMessageDiv.className = 'message bot-message';
-                const answer = data.answer || data.response || 'Sorry, I could not process your request.';
+                const answer = data.answer || data.response || '⚡ Processing complete. How can I assist further?';
                 botMessageDiv.innerHTML = `<div class="message-content">🤖 ${escapeHtml(answer)}</div>`;
                 chatContainer.appendChild(botMessageDiv);
                 chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -464,7 +764,7 @@
                 document.getElementById('typingIndicator').remove();
                 const errorDiv = document.createElement('div');
                 errorDiv.className = 'message bot-message';
-                errorDiv.innerHTML = `<div class="message-content">❌ Error: ${error.message}</div>`;
+                errorDiv.innerHTML = `<div class="message-content">❌ Neural link error: ${error.message}</div>`;
                 chatContainer.appendChild(errorDiv);
                 chatContainer.scrollTop = chatContainer.scrollHeight;
             }
@@ -472,7 +772,7 @@
 
         function copyKey(key) {
             navigator.clipboard.writeText(key);
-            alert('✅ API Key copied to clipboard!');
+            alert('✅ API Key copied to neural interface!');
         }
 
         function escapeHtml(text) {
@@ -481,7 +781,6 @@
             return div.innerHTML;
         }
 
-        // Enter key to send
         document.getElementById('questionInput')?.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 sendMessage();
