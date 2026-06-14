@@ -1,0 +1,22 @@
+{
+  "name": "tneh-ethical-hacker-chatbot",
+  "version": "1.0.0",
+  "description": "TNEH Ethical Hacker AI Chatbot - Cybersecurity Learning Assistant",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "node api/index.js",
+    "dev": "nodemon api/index.js"
+  },
+  "engines": {
+    "node": "18.x"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "axios": "^1.6.0",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
